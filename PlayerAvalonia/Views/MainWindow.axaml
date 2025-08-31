@@ -1,0 +1,50 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:PlayerAvalonia.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="PlayerAvalonia.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        ExtendClientAreaChromeHints="NoChrome"
+		Icon="/Assets/avalonia-logo.ico"
+        Title="PlayerAvalonia">
+		
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="120"/>
+			<ColumnDefinition Width="300"/>
+			<ColumnDefinition Width="auto"/>
+		</Grid.ColumnDefinitions>
+		<Grid Grid.Column="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="200"/>
+				<RowDefinition Height="200"/>
+				<RowDefinition Height="70"/>
+			</Grid.RowDefinitions>
+		</Grid>
+		<!--Player-->
+		<Grid Grid.Column="0" Grid.RowSpan="1">
+			<StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10" Orientation="Vertical">
+				<ListBox ItemsSource="{Binding Menu}" CornerRadius="8" Background="Transparent">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<Label Content="{Binding Name}"/>
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</StackPanel>
+			<Rectangle RadiusX="8" RadiusY="8" Fill="Red" Width="100" Height="100" Margin="15 15 15 30" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+		</Grid>	
+		<Grid Grid.ColumnSpan="3"  Grid.Row="1" Background="#3000">
+			
+		</Grid>
+	</Grid>
+</Window>
