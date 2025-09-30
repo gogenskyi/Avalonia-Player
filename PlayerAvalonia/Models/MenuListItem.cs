@@ -1,11 +1,4 @@
-﻿using Avalonia.Media.Imaging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PlayerAvalonia.Models
+﻿namespace PlayerAvalonia.Models
 {
     public class MenuListItem
     {

@@ -1,8 +1,9 @@
-﻿using ReactiveUI;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace PlayerAvalonia.ViewModels
 {
-    public class ViewModelBase : ReactiveObject
+    public class ViewModelBase : ObservableObject
     {
+        
     }
 }

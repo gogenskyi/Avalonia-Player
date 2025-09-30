@@ -3,48 +3,199 @@
         xmlns:vm="using:PlayerAvalonia.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="400"
         x:Class="PlayerAvalonia.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        ExtendClientAreaChromeHints="NoChrome"
+        Loaded="Window_Loaded"
+        MaxHeight="500"
+        MaxWidth="700"
+        MinHeight="455"
+        MinWidth="625"
 		Icon="/Assets/avalonia-logo.ico"
-        Title="PlayerAvalonia">
+        Title="{Binding SelectedTitle}">
 		
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-
 	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="120"/>
-			<ColumnDefinition Width="300"/>
-			<ColumnDefinition Width="auto"/>
-		</Grid.ColumnDefinitions>
-		<Grid Grid.Column="0">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="200"/>
-				<RowDefinition Height="200"/>
-				<RowDefinition Height="70"/>
-			</Grid.RowDefinitions>
-		</Grid>
-		<!--Player-->
-		<Grid Grid.Column="0" Grid.RowSpan="1">
-			<StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10" Orientation="Vertical">
-				<ListBox ItemsSource="{Binding Menu}" CornerRadius="8" Background="Transparent">
-					<ListBox.ItemTemplate>
-						<DataTemplate>
-							<StackPanel Orientation="Horizontal">
-								<Label Content="{Binding Name}"/>
-							</StackPanel>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
-			</StackPanel>
-			<Rectangle RadiusX="8" RadiusY="8" Fill="Red" Width="100" Height="100" Margin="15 15 15 30" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-		</Grid>	
-		<Grid Grid.ColumnSpan="3"  Grid.Row="1" Background="#3000">
-			
-		</Grid>
-	</Grid>
+        <Grid.Background>
+            <RadialGradientBrush GradientOrigin="0.5,0.5">
+                <GradientStop Color="#323232" Offset="0.5"/>
+                <GradientStop Color="#1c1d1a" Offset="1"/>
+            </RadialGradientBrush>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0"
+              HorizontalAlignment="Left">
+            <StackPanel>
+                <Grid>
+                    <Button Height="20"
+                            Width="200"
+                            Background="Transparent"
+                            Command="{Binding LoadMusicCommand}">
+                        
+                    </Button>
+                    <Label Content="Select Folder"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           ZIndex="-1"/>
+                </Grid>
+                <ListBox ItemsSource="{Binding menu}"
+                         VerticalAlignment="Top"
+                         Background="Transparent">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Name}"
+                                   FontSize="15"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Bottom"
+                        HorizontalAlignment="Left">
+                <Rectangle Height="150"
+                           Width="150"
+                           Margin="10 0 10 5"
+                           RadiusX="12" 
+                           RadiusY="12">
+                    <Rectangle.Fill>
+                        <ImageBrush Source="{Binding SelectedAlbum}"
+                                    Stretch="UniformToFill"/>
+                    </Rectangle.Fill>
+                    <Rectangle.Effect>
+                        <DropShadowDirectionEffect Color="Black"
+                                                   BlurRadius="8"/>
+                    </Rectangle.Effect>
+                </Rectangle>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1"
+              Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <ListBox ItemsSource="{Binding Songs}"
+                     SelectedItem="{Binding SelectedSong, Mode=TwoWay}"
+                     Grid.ColumnSpan="3"
+                     Background="Transparent">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid>
+                                <Label Content="{Binding Index}"
+                                       HorizontalAlignment="Left" />
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <Label Content="{Binding Title}"
+                                       HorizontalAlignment="Left" />
+                            </Grid>
+                            <Grid Grid.Column="3">
+                                <Label Content="{Binding Artist}"
+                                       HorizontalAlignment="Center" />
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <Rectangle Height="35"
+                                           Width="35"
+                                           RadiusX="5"
+                                           RadiusY="5"
+                                           HorizontalAlignment="Center">
+                                    <Rectangle.Fill>
+                                        <ImageBrush Source="{Binding AlbumArt}"/>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <Grid Grid.ColumnSpan="2"
+              Grid.Row="1">
+            <Grid Margin="10 0 10 0">
+                <Grid VerticalAlignment="Center">
+                    <Label Content="{Binding CurrentTimePosition}"
+                           HorizontalContentAlignment="Left"
+                           HorizontalAlignment="Left"
+                           FontSize="9" />
+                    <Label Content="{Binding DurationTimePosition}"
+                           HorizontalContentAlignment="Right"
+                           HorizontalAlignment="Right"
+                           FontSize="9" />
+                    
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Margin="0 0 0 10">
+                        <Grid>
+                            <Button Height="20" 
+                                    Width="20"
+                                    ZIndex="2"
+                                    CornerRadius="180"
+                                    Background="Transparent"
+                                    Command="{Binding PreviuosCommand}"/>
+                            <Image Source="/Assets/Previous.png"
+                                   Height="20" 
+                                   Width="20"
+                                   Stretch="UniformToFill"
+                                   ZIndex="-1"/>
+                        </Grid>
+                        <Grid>
+                            <Button Height="25" 
+                                    Width="25"
+                                    CornerRadius="180"
+                                    ZIndex="2"
+                                    Background="Transparent"
+                                    Command="{Binding PlayPauseCommand}"/>
+                            <Image Source="/Assets/Play.png" Stretch="UniformToFill"
+                                   Height="22" Width="22" ZIndex="-1"/>
+                        </Grid>
+                        <Grid>
+                            <Button Height="20" 
+                                    Width="20"
+                                    CornerRadius="180"
+                                    Background="Transparent"                                
+                                    Command="{Binding NextCommand}"
+                                    ZIndex="2"/>
+                            <Image Source="/Assets/Next.png"
+                                   Height="20" 
+                                   Width="20"
+                                   ZIndex="-1"
+                                   Stretch="UniformToFill"/>
+                            
+                        </Grid>
+                        
+                    </StackPanel>
+                </Grid>
+                <Grid Height="40"
+                      Margin="10 0">
+                    <Slider Maximum="{Binding TrackDurationSeconds}"
+                            Value="{Binding TrackPositionSeconds}"
+                            Thumb.DragStarted="Slider_DragStarted"
+                            Thumb.DragCompleted="Slider_DragCompleted"
+                            IsVisible="True"
+                            VerticalAlignment="Center"
+                            Margin="10 30 10 0"
+                            Height="40"
+                            ZIndex="1"/>
+                   
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
 </Window>
