@@ -33,32 +33,12 @@ namespace PlayerAvalonia.Views
             if (DataContext is MainWindowViewModel vm)
                 vm.IsDraggingSlider = false;
         }
-        private void Slider_PointerPressed(object? sender, PointerPressedEventArgs e)
+        
+        private void Menu_SelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
-            if (DataContext is MainWindowViewModel vm)
+            if (DataContext is MainWindowViewModel vm && vm.SelectedMenuItem != null)
             {
-                vm.IsDraggingSlider = true;
-    
-                // одразу підхоплюємо Value при кліку по доріжці
-                if (sender is Slider slider)
-                {
-                    vm.TrackPositionSeconds = slider.Value;
-                }
-            }
-        }
-    
-        private void Slider_PointerReleased(object? sender, PointerReleasedEventArgs e)
-        {
-            if (DataContext is MainWindowViewModel vm)
-            {
-                vm.IsDraggingSlider = false;
-    
-                // при відпусканні виставляємо нову позицію у Bass
-                if (sender is Slider slider && vm.StreamHandle != 0)
-                {
-                    long bytePos = ManagedBass.Bass.ChannelSeconds2Bytes(vm.StreamHandle, slider.Value);
-                    ManagedBass.Bass.ChannelSetPosition(vm.StreamHandle, bytePos);
-                }
+                vm.SelectedMenuItem.Command.Execute(null);
             }
         }
     }

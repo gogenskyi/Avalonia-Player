@@ -23,30 +23,18 @@ namespace PlayerAvalonia.ViewModels
     public partial class MainWindowViewModel : ViewModelBase
     {
 
-        public List<MenuListItem> menu {get;} = new()
-        {
-            new MenuListItem()
-            {
-                Name = "Main", Page = "Main"
-            },
-            new MenuListItem()
-            {
-                Name = "Artists", Page = "Artists"
-            },
-            new MenuListItem()
-            {
-                Name = "Albums", Page = "Albums"
-            },
-            new MenuListItem()
-            {
-                Name = "Playlists", Page = "Playlists"
-            }
-        };
+        public ObservableCollection<MenuListItem> MenuItems { get; } = new();
+        [ObservableProperty]
+        public MenuListItem? selectedMenuItem;
+        public IRelayCommand<MenuListItem> MenuItemSelectedCommand { get; }
         public ObservableCollection<Song> Songs { get; set; } = new();
         public IAsyncRelayCommand LoadMusicCommand { get; }
         public ICommand NextCommand => new RelayCommand(PlayNextSong);
         public ICommand PreviuosCommand => new RelayCommand(PlayPreviuosSong);
         public ICommand PlayPauseCommand => new RelayCommand(PauseOrResume);
+        public ICommand IndexCommand => new RelayCommand(SortByIndex);
+        public ICommand ArtistCommand => new RelayCommand(SortByArtist);
+        public ICommand TitleCommand => new RelayCommand(SortByTitle);
         
         private int _streamHandle;
     private bool _isDraggingSlider;
@@ -80,6 +68,19 @@ namespace PlayerAvalonia.ViewModels
                 }
             }
         }
+        public void SortByTitle()
+        {
+            Songs.Sort(s => s.Title);
+        }
+        public void SortByIndex()
+        {
+            Songs.Sort(s => s.Index);
+        }
+        public void SortByArtist()
+        {
+            Songs.Sort(s => s.Artist);
+        }
+        
         public bool IsPlaying
         {
             get => _isPlaying;
@@ -495,9 +496,17 @@ namespace PlayerAvalonia.ViewModels
                 });
             }
         }
+        private void OnMenuItemSelected(MenuListItem? item)
+        {
+            item?.Command.Execute(null);
+        }
 
         public MainWindowViewModel()
         {
+            MenuItems.Add(new MenuListItem("Home", new RelayCommand(SortByIndex)));
+            MenuItems.Add(new MenuListItem("Title", new RelayCommand(SortByTitle)));
+            MenuItems.Add(new MenuListItem("Artist", new RelayCommand(SortByArtist)));
+            MenuItemSelectedCommand = new RelayCommand<MenuListItem>(OnMenuItemSelected);
             LoadMusicCommand = new AsyncRelayCommand<Window>(SelectFolderAndLoadMusic);
         }
         public string CurrentTimePosition =>
