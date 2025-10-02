@@ -34,6 +34,10 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </AvaloniaResource>
   </ItemGroup>
-  
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\Play.png" />
+    <AvaloniaResource Include="Assets\Pause.png" />
+    <AvaloniaResource Include="Assets\albumdefault.png" />
+  </ItemGroup>
   
 </Project>

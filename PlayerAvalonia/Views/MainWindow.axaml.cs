@@ -22,19 +22,30 @@ namespace PlayerAvalonia.Views
               vm.LoadLastUsedFolder();  
             }
         }
-//        private void Slider_DragStarted(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-//        {
-//            if (DataContext is MainWindowViewModel vm)
-//            {
-//                  vm.IsDraggingSlider = true;
-//            }
-//        }
-//        
-//        private void Slider_DragCompleted(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-//        {
-//            if (DataContext is MainWindowViewModel vm)
-//                vm.IsDraggingSlider = false;
-//        }
+        private void PlayIconIsEnabled(object? sender, PointerPressedEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel vm)
+            {
+                if(vm.IsPlaying)
+                {
+                    IsEnabled = true;
+                }
+                else
+                    IsEnabled = false;
+            }
+        }
+        private void PauseIconIsEnabled(object? sender, PointerPressedEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel vm)
+            {
+                if(vm.IsPlaying)
+                {
+                    IsEnabled = false;
+                }
+                else
+                    IsEnabled = true;
+            }
+        }
         private void Slider_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             if (DataContext is MainWindowViewModel vm)

@@ -101,7 +101,9 @@
                                 Background="Transparent"
                                 Command="{Binding PlayPauseCommand}"/>
                         <Image Source="/Assets/Play.png" Stretch="UniformToFill"
-                               Height="30" Width="30" ZIndex="-1"/>
+                               Height="30" Width="30" ZIndex="-1" IsVisible="{Binding IsPlayIconEnabled}"/>
+                        <Image Source="/Assets/Pause.png" Stretch="UniformToFill"
+                               Height="30" Width="30" ZIndex="-1" IsVisible="{Binding IsPauseIconEnabled}"/>
                     </Grid>
                     <Grid>
                         <Button Height="25" 

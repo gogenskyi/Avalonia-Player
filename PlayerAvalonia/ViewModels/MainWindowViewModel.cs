@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using PlayerAvalonia.Models;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia;
@@ -85,10 +87,14 @@ namespace PlayerAvalonia.ViewModels
                 {
                     _isPlaying = value;
                     OnPropertyChanged(nameof(IsPlaying));
-                    OnPropertyChanged(nameof(PlayPauseIcon));
+                    OnPropertyChanged(nameof(IsPlayIconEnabled));
+                    OnPropertyChanged(nameof(IsPauseIconEnabled));
                 }
             }
         }
+        
+        public bool IsPlayIconEnabled => !IsPlaying;
+        public bool IsPauseIconEnabled => IsPlaying;
         public string SelectedTitle
         {
             get
@@ -104,6 +110,7 @@ namespace PlayerAvalonia.ViewModels
                 return _selectedSong.Title;
             }
         }
+       
         public string FullTitle;
         public string FullArtist;
         public string SelectedArtist
@@ -125,9 +132,6 @@ namespace PlayerAvalonia.ViewModels
             
         private DispatcherTimer _positionTimer;
         protected bool _isPlaying = false;
-        public string PlayPauseIcon => IsPlaying
-    ? "/Assets/Pause.png"
-    : "/Assets/Play.png";
         
         private double _trackPositionSeconds;
         public double TrackPositionSeconds
@@ -517,6 +521,8 @@ namespace PlayerAvalonia.ViewModels
             TimeSpan.FromSeconds(TrackPositionSeconds).ToString(@"mm\:ss");
         public string DurationTimePosition =>
             TimeSpan.FromSeconds(TrackDurationSeconds).ToString(@"mm\:ss");
+        
+         
     }
     
 }
