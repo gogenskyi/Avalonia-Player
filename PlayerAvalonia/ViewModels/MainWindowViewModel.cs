@@ -300,6 +300,7 @@ namespace PlayerAvalonia.ViewModels
                                  .Where(f => supportedExtensions.Contains(Path.GetExtension(f).ToLower()));
         
             Songs.Clear();
+            int i = 1;
             foreach (var path in files)
             {
                 try
@@ -318,15 +319,16 @@ namespace PlayerAvalonia.ViewModels
                         // fallback image (Assets має бути позначена як AvaloniaResource у .csproj)
                         albumArtImage = new Bitmap("Assets/albumdefault.png");
                     }
-        
+            
                     var song = new Song
                     {
                         FilePath = path,
-                        Index = (short)Songs.Count,
+                        Index = i++,
                         Title = tagFile.Tag.Title ?? Path.GetFileNameWithoutExtension(path),
                         Artist = tagFile.Tag.FirstPerformer ?? "Unknown",
                         AlbumArt = albumArtImage
                     };
+                    i = i++;
         
                     Songs.Add(song);
                 }

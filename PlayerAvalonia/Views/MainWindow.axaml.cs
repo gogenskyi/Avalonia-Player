@@ -33,13 +33,5 @@ namespace PlayerAvalonia.Views
             if (DataContext is MainWindowViewModel vm)
                 vm.IsDraggingSlider = false;
         }
-        
-        private void Menu_SelectionChanged(object? sender, SelectionChangedEventArgs e)
-        {
-            if (DataContext is MainWindowViewModel vm && vm.SelectedMenuItem != null)
-            {
-                vm.SelectedMenuItem.Command.Execute(null);
-            }
-        }
     }
 }
