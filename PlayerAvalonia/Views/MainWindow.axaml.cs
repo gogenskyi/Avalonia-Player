@@ -19,8 +19,6 @@ namespace PlayerAvalonia.Views
         {
             if (DataContext is MainWindowViewModel vm)
             {
-//            var files = Directory.GetFiles(@"/home/gogenskyi/Музика", "*.mp3");
-//            vm.LoadSongs(files);
               vm.LoadLastUsedFolder();  
             }
         }

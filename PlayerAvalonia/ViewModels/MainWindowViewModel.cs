@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using PlayerAvalonia.Models;
@@ -22,10 +21,6 @@ namespace PlayerAvalonia.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
-
-        public ObservableCollection<MenuListItem> MenuItems { get; } = new();
-        [ObservableProperty]
-        public MenuListItem? selectedMenuItem;
         public IRelayCommand<MenuListItem> MenuItemSelectedCommand { get; }
         public ObservableCollection<Song> Songs { get; set; } = new();
         public IAsyncRelayCommand LoadMusicCommand { get; }
@@ -152,10 +147,20 @@ namespace PlayerAvalonia.ViewModels
     }
         private double _trackDurationSeconds;
         public double TrackDurationSeconds
-    {
-        get => _trackDurationSeconds;
-        private set => SetProperty(ref _trackDurationSeconds, value);
-    }
+        {
+            get => _trackDurationSeconds;
+            private set
+            {
+                // опціонально — уникнути "дрібних" змін через плаваючу точку
+                if (Math.Abs(_trackDurationSeconds - value) < 0.01) return;
+        
+                if (SetProperty(ref _trackDurationSeconds, value))
+                {
+                    // CommunityToolkit.Mvvm: OnPropertyChanged([CallerMemberName]) доступний в базі
+                    OnPropertyChanged(nameof(DurationTimePosition));
+                }
+            }
+        }
 
         public void LoadSongs(string[] filePaths)
         {
@@ -191,7 +196,7 @@ namespace PlayerAvalonia.ViewModels
                     TrackPositionSeconds = Bass.ChannelBytes2Seconds(_streamHandle, pos);
                 }
                 return true; // повторювати
-            }, TimeSpan.FromMilliseconds(500));
+            }, TimeSpan.FromMilliseconds(200));
         }
         
         private Bitmap LoadImage(TagLib.File file)
@@ -505,9 +510,6 @@ namespace PlayerAvalonia.ViewModels
 
         public MainWindowViewModel()
         {
-            MenuItems.Add(new MenuListItem("Home", new RelayCommand(SortByIndex)));
-            MenuItems.Add(new MenuListItem("Title", new RelayCommand(SortByTitle)));
-            MenuItems.Add(new MenuListItem("Artist", new RelayCommand(SortByArtist)));
             MenuItemSelectedCommand = new RelayCommand<MenuListItem>(OnMenuItemSelected);
             LoadMusicCommand = new AsyncRelayCommand<Window>(SelectFolderAndLoadMusic);
         }

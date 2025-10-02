@@ -221,9 +221,8 @@
                             Margin="10 0 10 0"
                             Height="40"
                             ZIndex="1"/>
-                            <!--Thumb.DragStarted="Slider_DragStarted"
-                            Thumb.DragCompleted="Slider_DragCompleted"-->
-                    <Grid VerticalAlignment="Top">
+                    <Grid VerticalAlignment="Top"
+                          Margin="10 0 10 5">
                         <Label Content="{Binding CurrentTimePosition}"
                                HorizontalContentAlignment="Left"
                                HorizontalAlignment="Left"
