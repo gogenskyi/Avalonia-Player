@@ -6,11 +6,11 @@
         mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="400"
         x:Class="PlayerAvalonia.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        MaxHeight="500"
-        MaxWidth="700"
+        MaxHeight="520"
+        MaxWidth="725"
         Loaded="Window_Loaded"
-        MinHeight="455"
-        MinWidth="625"
+        MinHeight="500"
+        MinWidth="700"
 		Icon="/Assets/avalonia-logo.ico"
         Title="{Binding SelectedTitle}">
 		
@@ -19,111 +19,195 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 	<Grid>
-        <Grid.Background>
-            <RadialGradientBrush GradientOrigin="0.5,0.5">
-                <GradientStop Color="#323232" Offset="0.5"/>
-                <GradientStop Color="#1c1d1a" Offset="1"/>
-            </RadialGradientBrush>
-        </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="230"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="60"/>
-        </Grid.RowDefinitions>
         <Grid Grid.Column="0"
-              HorizontalAlignment="Left">
-                <StackPanel Margin="0 10">
-                    <Button Height="40"
-                            Width="200"
-                            VerticalAlignment="Center"
-                            Content="Select Folder"
-                            Background="Transparent"
-                            Command="{Binding LoadMusicCommand}"/>
-                    <Button Command="{Binding IndexCommand}"
-                            Background="Transparent"
-                            Content="Home"
-                            VerticalAlignment="Center"
-                            Width="200"
-                            Height="40"/>
-                    <Button Command="{Binding TitleCommand}"
-                            Background="Transparent"
-                            Content="Title"
-                            VerticalAlignment="Center"
-                            Width="200"
-                            Height="40"/>
-                    <Button Command="{Binding ArtistCommand}"
-                            Background="Transparent"
-                            Content="Artist"
-                            VerticalAlignment="Center"
-                            Width="200"
-                            Height="40"/>
+              HorizontalAlignment="Left"
+              Background="#252525">
+                <StackPanel Margin="4 10">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Assets/Folder.png"
+                                   Height="30"
+                                   Margin="6 0"
+                                   Width="30"
+                                   Stretch="Uniform"
+                                   Opacity="0.9"/>
+                            <Label Content="Select Folder"
+                                   VerticalContentAlignment="Center"
+                                   FontSize="14"/>
+                        </StackPanel>
+                        <Button Height="40"
+                                Width="230"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                Command="{Binding LoadMusicCommand}"/>
+                        
+                    </Grid>
+                    <Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Assets/Home.png"
+                                   Height="30"
+                                   Width="30"
+                                   Margin="6 0"
+                                   Stretch="Uniform" 
+                                   Opacity="0.9"/>
+                            <Label Content="Home"
+                                   VerticalContentAlignment="Center"
+                                   FontSize="14"/>
+                        </StackPanel>
+                        <Button Height="40"
+                                Width="230"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                Command="{Binding IndexCommand}"/>
+                        
+                    </Grid>
+                    <Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Assets/Title.png"
+                                   Height="30"
+                                   Width="30"
+                                   Margin="6 0"
+                                   Opacity="0.9"
+                                   Stretch="Uniform" />
+                            <Label Content="Title"
+                                   VerticalContentAlignment="Center"
+                                   FontSize="14"/>
+                        </StackPanel>
+                        <Button Height="40"
+                                Width="230"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                Command="{Binding TitleCommand}"/>
+                        
+                    </Grid>
+                    <Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Assets/Artist.png"
+                                   Height="30"
+                                   Width="30"
+                                   Margin="6 0"
+                                   Opacity="0.9"
+                                   Stretch="Uniform" />
+                            <Label Content="Artist"
+                                   VerticalContentAlignment="Center"
+                                   FontSize="14"/>
+                        </StackPanel>
+                        <Button Height="40"
+                                Width="230"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                Command="{Binding ArtistCommand}"/>
+                        
+                    </Grid>
                 </StackPanel>
             <StackPanel VerticalAlignment="Bottom"
-                        HorizontalAlignment="Left">
-                <Rectangle Height="150"
-                           Width="150"
-                           Margin="10 0 10 5"
+                        HorizontalAlignment="Center">
+                <Rectangle Height="200"
+                           Width="200"
+                           Margin="5 0 5 0"
                            RadiusX="12" 
                            RadiusY="12">
                     <Rectangle.Fill>
                         <ImageBrush Source="{Binding SelectedAlbum}"
                                     Stretch="UniformToFill"/>
                     </Rectangle.Fill>
-                    <Rectangle.Effect>
-                        <DropShadowDirectionEffect Color="Black"
-                                                   BlurRadius="8"/>
-                    </Rectangle.Effect>
                 </Rectangle>
+                <Slider x:Name="PositionSlider"
+                        Maximum="{Binding TrackDurationSeconds}"
+                        Value="{Binding TrackPositionSeconds}"
+                        IsVisible="True"
+                        PointerPressed="Slider_PointerPressed"
+                        PointerReleased="Slider_PointerReleased"
+                        VerticalAlignment="Center"
+                        Background="#3a3a3a"
+                        Margin="10 0 10 0"
+                        ZIndex="1">
+                    <Slider.Styles>
+                        <Style Selector="Slider:horizontal">
+                            <Style Selector="^ Track">
+                                <Style Selector="^ Thumb">
+                                    <Setter Property="Width" Value="12"/>
+                                    <Setter Property="Height" Value="12"/>
+                                    <Setter Property="Background" Value="#2d5fe8"/>
+                                </Style>
+                            </Style>
+                        </Style>
+                    </Slider.Styles>
+                </Slider>
+                
                 <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Center"> 
-                    
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0 0 0 10"> 
+                    <Grid Margin="10 0"
+                          VerticalAlignment="Top"
+                          Width="40"
+                          HorizontalAlignment="Center">
+                        <Label Content="{Binding CurrentTimePosition}"
+                               HorizontalContentAlignment="Left"
+                               HorizontalAlignment="Left"
+                               FontSize="9" />
+                    </Grid>
                     <Grid>
-                        <Button Height="25" 
-                                Width="25"
+                        <Button Height="30" 
+                                Width="30"
                                 ZIndex="2"
                                 CornerRadius="180"
                                 Background="Transparent"
                                 Command="{Binding PreviuosCommand}"/>
                         <Image Source="/Assets/Previous.png"
-                               Height="25" 
-                               Width="25"
+                               Height="30" 
+                               Width="30"
                                Stretch="UniformToFill"
                                ZIndex="-1"/>
                     </Grid>
-                    <Grid>
-                        <Button Height="32" 
-                                Width="32"
+                    <Grid Margin="6 0"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+                        <Button Height="40" 
+                                Width="40"
                                 CornerRadius="180"
                                 ZIndex="2"
                                 Background="Transparent"
                                 Command="{Binding PlayPauseCommand}"/>
-                        <Image Source="/Assets/Play.png" Stretch="UniformToFill"
-                               Height="30" Width="30" ZIndex="-1" IsVisible="{Binding IsPlayIconEnabled}"/>
-                        <Image Source="/Assets/Pause.png" Stretch="UniformToFill"
-                               Height="30" Width="30" ZIndex="-1" IsVisible="{Binding IsPauseIconEnabled}"/>
+                        <Image Source="/Assets/Play.png" Stretch="Uniform"
+                               Height="40" Width="40" ZIndex="-1" IsVisible="{Binding IsPlayIconEnabled}"/>
+                        <Image Source="/Assets/Pause.png" Stretch="Uniform"
+                               Height="40" Width="40" ZIndex="-1" IsVisible="{Binding IsPauseIconEnabled}"/>
                     </Grid>
                     <Grid>
-                        <Button Height="25" 
-                                Width="25"
+                        <Button Height="30" 
+                                Width="30"
                                 CornerRadius="180"
                                 Background="Transparent"                                
                                 Command="{Binding NextCommand}"
                                 ZIndex="2"/>
                         <Image Source="/Assets/Next.png"
-                               Height="25" 
-                               Width="25"
+                               Height="30" 
+                               Width="30"
                                ZIndex="-1"
                                Stretch="UniformToFill"/>
     
+                    </Grid>
+                    <Grid Margin="10 0"
+                          Width="40"
+                          VerticalAlignment="Top"
+                          HorizontalAlignment="Right">
+                        <Label Content="{Binding DurationTimePosition}"
+                               HorizontalContentAlignment="Right"
+                               HorizontalAlignment="Right"
+                               FontSize="9" />
                     </Grid>
                 </StackPanel>
             </StackPanel>
         </Grid>
         <Grid Grid.Column="1"
-              Grid.Row="0">
+              Grid.Row="0"
+              Background="#1e1e1e">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="50"/>
@@ -137,7 +221,7 @@
             <Border Grid.Row="0" Grid.Column="0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center">
-                <Label Content="Number"
+                <Label Content=""
                        Foreground="Gray"
                        FontSize="10"/>
             </Border>
@@ -168,7 +252,20 @@
                      SelectedItem="{Binding SelectedSong, Mode=TwoWay}"
                      Grid.ColumnSpan="4"
                      Grid.Row="1"
+                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
                      Background="Transparent">
+                <ListBox.Styles>
+                    <Style Selector="ListBoxItem">
+                        <Setter Property="CornerRadius" Value="8"/>
+                        <Setter Property="Margin" Value="2"/>
+                        <Setter Property="Padding" Value="12"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+                    <Style Selector="ListBoxItem:selected">
+                        <Setter Property="Background" Value="#2d5fe8"/>
+                        <Setter Property="Foreground" Value="White"/>                
+                    </Style>
+                </ListBox.Styles>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid VerticalAlignment="Center">
@@ -206,37 +303,6 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        </Grid>
-        <Grid Grid.ColumnSpan="2"
-              Grid.Row="1"
-               Background="Transparent">
-            <Grid Margin="10 0 10 0">
-                <Grid Height="40"
-                      Margin="10 0">
-                    <Slider x:Name="PositionSlider"
-                            Maximum="{Binding TrackDurationSeconds}"
-                            Value="{Binding TrackPositionSeconds}"
-                            IsVisible="True"
-                            PointerPressed="Slider_PointerPressed"
-                            PointerReleased="Slider_PointerReleased"
-                            VerticalAlignment="Center"
-                            Margin="10 0 10 0"
-                            Height="40"
-                            ZIndex="1"/>
-                    <Grid VerticalAlignment="Top"
-                          Margin="10 0 10 5">
-                        <Label Content="{Binding CurrentTimePosition}"
-                               HorizontalContentAlignment="Left"
-                               HorizontalAlignment="Left"
-                               FontSize="9" />
-                        <Label Content="{Binding DurationTimePosition}"
-                               HorizontalContentAlignment="Right"
-                               HorizontalAlignment="Right"
-                               FontSize="9" />
-                    </Grid>
-                   
-                </Grid>
-            </Grid>
         </Grid>
     </Grid>
 </Window>
