@@ -103,9 +103,9 @@ namespace PlayerAvalonia.ViewModels
                 {
                     _selectedSong.Title = "Unknown Title";
                 }
-                else if(_selectedSong.Title.Length >= 30)
+                else if(_selectedSong.Title.Length >= 23)
                 {
-                     _selectedSong.Title = FullTitle.Substring(0, 30 - 3) + "...";
+                     _selectedSong.Title = FullTitle.Substring(0, 23 - 3) + "...";
                 }
                 return _selectedSong.Title;
             }
@@ -183,9 +183,9 @@ namespace PlayerAvalonia.ViewModels
                 };
                 FullTitle = song.Title;
                 FullArtist = song.Artist;
-                if (song.Title.Length > 30)
+                if (song.Title.Length > 23)
                 {
-                    song.Title = song.Title.Substring(0, 30 - 3) + "...";
+                    song.Title = song.Title.Substring(0, 23 - 3) + "...";
                 }
                 Songs.Add(song);
             }

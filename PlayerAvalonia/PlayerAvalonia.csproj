@@ -39,5 +39,8 @@
     <AvaloniaResource Include="Assets\Pause.png" />
     <AvaloniaResource Include="Assets\albumdefault.png" />
   </ItemGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Assets\media.ico</ApplicationIcon>
+  </PropertyGroup>
   
 </Project>

@@ -10,8 +10,9 @@
         MaxWidth="725"
         Loaded="Window_Loaded"
         MinHeight="500"
+        CanResize="False"
         MinWidth="700"
-		Icon="/Assets/avalonia-logo.ico"
+		Icon="/Assets/media.ico"
         Title="{Binding SelectedTitle}">
 		
 
@@ -30,9 +31,9 @@
                     <Grid>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Assets/Folder.png"
-                                   Height="30"
+                                   Height="24"
                                    Margin="6 0"
-                                   Width="30"
+                                   Width="24"
                                    Stretch="Uniform"
                                    Opacity="0.9"/>
                             <Label Content="Select Folder"
@@ -49,8 +50,8 @@
                     <Grid>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Assets/Home.png"
-                                   Height="30"
-                                   Width="30"
+                                   Height="24"
+                                   Width="24"
                                    Margin="6 0"
                                    Stretch="Uniform" 
                                    Opacity="0.9"/>
@@ -68,8 +69,8 @@
                     <Grid>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Assets/Title.png"
-                                   Height="30"
-                                   Width="30"
+                                   Height="24"
+                                   Width="24"
                                    Margin="6 0"
                                    Opacity="0.9"
                                    Stretch="Uniform" />
@@ -87,8 +88,8 @@
                     <Grid>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Assets/Artist.png"
-                                   Height="30"
-                                   Width="30"
+                                   Height="24"
+                                   Width="24"
                                    Margin="6 0"
                                    Opacity="0.9"
                                    Stretch="Uniform" />
@@ -226,22 +227,22 @@
                        FontSize="10"/>
             </Border>
             <Border Grid.Row="0" Grid.Column="1"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Margin="0 0 8 0">
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
                 <Label Content="Album"
                        Foreground="Gray"
                        FontSize="10"/>
             </Border>
             <Border Grid.Row="0" Grid.Column="2"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="10 0 2 0">
                 <Label Content="Title"
                        Foreground="Gray"
                        FontSize="10"/>
             </Border>
             <Border Grid.Row="0" Grid.Column="3"
-                    HorizontalAlignment="Center"
+                    HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Margin="0 0 5 0">
                 <Label Content="Artist"
@@ -258,6 +259,7 @@
                     <Style Selector="ListBoxItem">
                         <Setter Property="CornerRadius" Value="8"/>
                         <Setter Property="Margin" Value="2"/>
+                        <Setter Property="Height" Value="47"/>                        
                         <Setter Property="Padding" Value="12"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
                     </Style>
@@ -286,7 +288,7 @@
                             </Grid>
                             <Grid Grid.Column="3">
                                 <Label Content="{Binding Artist}"
-                                       HorizontalAlignment="Center" />
+                                       HorizontalAlignment="Left" />
                             </Grid>
                             <Grid Grid.Column="1">
                                 <Rectangle Height="35"
